@@ -79,4 +79,76 @@ public class TodosTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void searchForTodosFindOneTaskInEpic() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        EpicTask epic = new EpicTask(55, subtasks);
+
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда",
+                "12.01.2023 16:00"
+        );
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] actual = todos.search("Яйца");
+        Task[] expected = {epic};
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void searchForTodosFindOneTaskInSimple() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        EpicTask epic = new EpicTask(55, subtasks);
+
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда",
+                "12.01.2023 16:00"
+        );
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] actual = todos.search("Позвонить");
+        Task[] expected = {simpleTask};
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void searchForTodosNotFound() {
+        SimpleTask simpleTask = new SimpleTask(5, "Позвонить родителям");
+
+        String[] subtasks = {"Молоко", "Яйца", "Хлеб"};
+        EpicTask epic = new EpicTask(55, subtasks);
+
+        Meeting meeting = new Meeting(
+                555,
+                "Выкатка 3й версии приложения",
+                "Приложение НетоБанка",
+                "Во вторник после обеда",
+                "12.01.2023 16:00"
+        );
+        Todos todos = new Todos();
+        todos.add(simpleTask);
+        todos.add(epic);
+        todos.add(meeting);
+
+        Task[] actual = todos.search("Красный");
+        Task[] expected = {};
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
 }
